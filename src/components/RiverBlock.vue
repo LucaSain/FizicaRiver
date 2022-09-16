@@ -26,6 +26,15 @@ export default {
             this.time = this.htg / (this.WSpeed * Math.cos(this.NewAlpha))
             this.oxpos = (this.USpeed - this.WSpeed * Math.sin(this.NewAlpha)) * this.time
             this.oy = this.WSpeed * Math.cos(this.NewAlpha) * this.time
+            let res= Math.atan(this.oxpos/this.oy)
+            this.suprarotate={
+                "transform":"rotate("+((res/Math.PI *180).toString())+"deg"+")",
+                
+            }
+            this.rotate={
+                "transform":"rotate("+(360-this.Alpha).toString()+"deg"+")",
+
+            }
            // this.suprarotate["heigth"]=this.htg/this.Length*Math.sqrt(this.oxpos*this.oxpos+this.oy*this.oy).toString()+ "px"
             //console.log(this.suprarotate["heigth"])
         }
@@ -65,19 +74,14 @@ export default {
     watch: {
         
         Alpha: function (val) {
-            this.update()
-            let res= Math.atan(this.oxpos/this.oy)
-            this.suprarotate={
-                "transform":"rotate("+((res/Math.PI *180).toString())+"deg"+")",
-                
-            }
-            this.rotate={
-                "transform":"rotate("+(360-this.Alpha).toString()+"deg"+")",
-
-            }
-            
+            this.update()            
         },
-
+        WSpeed: function(val){
+            this.update()
+        },
+        USpeed: function(val){
+            this.update()
+        },
         Length: function (val) {
             let lenx = {
                 "height": val.toString() + "%" + " !important",
